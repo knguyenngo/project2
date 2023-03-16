@@ -1,13 +1,13 @@
 ////////////////////////////////////////////////////////////////////////
 //
 // File           : p2-support.h
-// Description    : Header file for project2 
-// Author         : ***Type Author Name ***
-// Date           : ***Type the date Date you completed***
-// Notes          : ***Type bug fixes/other with dates for your records 
+// Description    : Header file for project2
+// Author         : Khuong Nguyen
+// Date           : 3/15/2023
+// Notes          : 
 
-#ifndef P2Header //To prevent double inclusion of header
-#define P2Header //To prevent double inclusion of header
+#ifndef P2Header // To prevent double inclusion of header
+#define P2Header // To prevent double inclusion of header
 
 #include <stdio.h>
 #define byID 1
@@ -17,47 +17,57 @@
 #define nameSIZE 10
 #define emailSIZE 20
 
-
-typedef struct date// do not modify
+typedef struct date // do not modify
 {
-  int day; 
+  int day;
   int month;
   int year;
-}date;
+} date;
 
 typedef struct Employee
 {
   char ID[idSIZE];
-  //declare other members
-}employee, *employee_ptr;
+  char first_name[nameSIZE];
+  char last_name[nameSIZE];
+  char email[emailSIZE];
+  double salary;
+  date hire_date;
+} employee, *employee_ptr;
 
 typedef struct DataBase
 {
-  //a pointer to first element of empoloyee array
-  //number of employees in database
-}*dataBase_ptr;
+  // a pointer to first element of empoloyee array
+  employee *data_ptr;
+  // number of employees in database
+  int total;
+} *dataBase_ptr;
 
 // Functional Prototypes
 
 // Function     : initialize
 // Description  : This function creates an array in the database
-//                then initalializes each array elemet with the data 
+//                then initalializes each array elemet with the data
 //                in the given file
 // Inputs       : a pointer to DataBase struct
 // Output       : none
-void initialize (dataBase_ptr);
+void initialize(dataBase_ptr);
 
-//Write formal comments for each function header. 
-//In the same format with the initialize function
-void create_record ();//specify parameters types. Clues are in the initalize function.
+// Write formal comments for each function header.
+// In the same format with the initialize function
+void create_record(); // specify parameters types. Clues are in the initalize function.
 
-void print_title ();
+void print_title();
 
-void display_menu (dataBase_ptr);
+void display_menu(dataBase_ptr);
 
-//other function headers here
+// other function headers here
+void sort_ID();
+void sort_date();
+void display_employees();
+void search_ID();
+void search_last();
+void delete_employee();
 
 void save(dataBase_ptr);
 
-
-#endif //To prevent double inclusion of header
+#endif // To prevent double inclusion of header
