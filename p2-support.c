@@ -7,10 +7,24 @@
 
 
 
-void create_record ()// specify parameters. Clues are in the initalize function.
+void create_record (char ID[idSIZE], char first[nameSIZE], char last[nameSIZE], char email[emailSIZE], double salary, date hire_date, dataBase_ptr db)// specify parameters. Clues are in the initalize function.
 {
-  //define function. Clues are in the initalize function
-  //do not forget to increase total number of employees in the database
+  // Set index to current total of employees
+  int i = db->total;
+  employee *db_index = &(db->emp[i]); // Pointer to memory location after most recently added employee
+  employee add; // Employee that will be added to DataBase
+
+  // Copy given information into employee struct
+  strcpy(add.ID, ID);
+  strcpy(add.first_name, first);
+  strcpy(add.last_name, last);
+  strcpy(add.email, email);
+  add.salary = salary;
+  add.hire_date = hire_date;
+  
+  // Add employee to DataBase
+  *db_index = add;
+  db->total = ++i; // Increase total amount of employees
 }
 
 
@@ -18,11 +32,10 @@ void print_title ()// you can keep this fuction or remove if needed
 {
   printf ("No. ID    Name          Email        Salary     Hire Date\n");
   printf ("--- ----- ------------- ------------ ---------- --/--/----\n");
-
 }
 
 
-//fix save function. Save arraya into file database_updated in the same format withthe 
+//fix save function. Save array into file database_updated in the same format withthe 
 //database file.
 void save (dataBase_ptr db)// this function is for saving the database into a text file
 {
@@ -35,7 +48,7 @@ void save (dataBase_ptr db)// this function is for saving the database into a te
   }
   for (int i = 0; i < db->total; i++)
   {
-      fprintf (dbfu,//add format specifiers here, db->emp[i].ID,
+      fprintf (dbfu, "bro"); //add format specifiers here, db->emp[i].ID,
 	      //add other members);
 
   }
@@ -53,8 +66,7 @@ void display_menu (struct DataBase *db)
     puts
       ("\n**************************************************************");
     printf
-      (  "********** Employee Database - Total Employees: %03d **********\n",
-      );//you need to fix this line so that total employees in the database is printed
+      (  "********** Employee Database - Total Employees: %03d **********\n", db->total);//you need to fix this line so that total employees in the database is printed
     puts
       ("**************************************************************\n");
     puts ("Choose one of the menu options below:");

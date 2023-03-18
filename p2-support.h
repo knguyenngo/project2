@@ -36,8 +36,8 @@ typedef struct Employee
 
 typedef struct DataBase
 {
-  // a pointer to first element of empoloyee array
-  employee *data_ptr;
+  // a pointer to first element of employee array
+  employee *emp;
   // number of employees in database
   int total;
 } *dataBase_ptr;
@@ -52,22 +52,70 @@ typedef struct DataBase
 // Output       : none
 void initialize(dataBase_ptr);
 
-// Write formal comments for each function header.
-// In the same format with the initialize function
-void create_record(); // specify parameters types. Clues are in the initalize function.
+// Function     : create_record
+// Description  : Create record of employee from file lines
+// Inputs       : Employee's information such as ID, name, email, salary, hire date
+//                and the DataBase struct
+// Outputs      : none
+void create_record(char[idSIZE], char[nameSIZE], char[nameSIZE], char[emailSIZE], double, date, struct DataBase*);
 
+// Function     : print_title 
+// Description  : Print title for employee's records
+// Inputs       : none
+// Outputs      : none
 void print_title();
 
+// Function     : display_menu
+// Description  : Display interactive menu interface for program
+// Inputs       : a ponter to DataBase struct
+// Outputs      : none
 void display_menu(dataBase_ptr);
 
 // other function headers here
-void sort_ID();
-void sort_date();
-void display_employees();
-void search_ID();
-void search_last();
-void delete_employee();
 
+// Function     : sort_ID
+// Description  : Sort employees by ID from low - high
+// Inputs       : 
+// Outputs      : 
+void sort_ID();
+
+// Function     : sort_date
+// Description  : Sort employees by hire date from earliest - latest
+// Inputs       : 
+// Outputs      : 
+void sort_date();
+
+// Function     : display_employees
+// Description  : Display employees as ordered in the DataBase
+// Inputs       : 
+// Outputs      : 
+void display_employees();
+
+// Function     : search_ID
+// Description  : Search and display employee with given ID,
+//                display message if employee does not exist
+// Inputs       : employee's ID
+// Outputs      : employee matching given ID
+void search_ID(char[idSIZE]);
+
+// Function     : search_last
+// Description  : Search and partially display multiple employees by last name,
+//                or display complete match to given string
+// Inputs       : a string with desired last name
+// Outputs      : list of matching employees with given string
+void search_last(char[nameSIZE]);
+
+// Function     : delete_employee
+// Description  : Delete a record matching given ID 
+//                , print if no match found
+// Inputs       : employee's ID
+// Outputs      : none
+void delete_employee(char[idSIZE]);
+
+// Function     : save 
+// Description  : Save DataBase to another file named "database_updated"
+// Inputs       : a pointer to DataBase struct
+// Outputs      : none
 void save(dataBase_ptr);
 
 #endif // To prevent double inclusion of header

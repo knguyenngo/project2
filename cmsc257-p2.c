@@ -23,16 +23,18 @@ int main (int argc, char* argv[]){
     return 0; 
   }
 
-  struct DataBase* db; 
-  db = malloc(sizeof(struct DataBase));
-  initialize (db);
-  display_menu (db);
+  struct DataBase* db; // Creates pointer to DataBase 
+  db = malloc(sizeof(struct DataBase)); // Allocate memory for DataBase, db points to new array
+  initialize (db); // Initialize DataBase
+  display_menu (db); // Display menu with initialized DataBase
   fclose (dbf);//close file
   return 0;
 }
 
+// Initializes DataBase
 void initialize (struct DataBase *db)
 {
+  // Allocate memory for 100 employees, database pointer set to new array
   db->emp = malloc (sizeof (struct Employee) * 100);
   db->total = 0;
   char ID[idSIZE];
