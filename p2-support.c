@@ -7,8 +7,7 @@
 
 
 
-void create_record (char ID[idSIZE], char first[nameSIZE], char last[nameSIZE], char email[emailSIZE], double salary, date hire_date, dataBase_ptr db)// specify parameters. Clues are in the initalize function.
-{
+void create_record (char ID[idSIZE], char first[nameSIZE], char last[nameSIZE], char email[emailSIZE], double salary, date hire_date, dataBase_ptr db) {
   // Set index to current total of employees
   int i = db->total;
   employee *db_index = &(db->emp[i]); // Pointer to memory location after most recently added employee
@@ -27,18 +26,14 @@ void create_record (char ID[idSIZE], char first[nameSIZE], char last[nameSIZE], 
   db->total = ++i; // Increase total amount of employees
 }
 
-
-void print_title ()// you can keep this fuction or remove if needed
-{
+void print_title () {
   printf ("No. ID    Name          Email        Salary     Hire Date\n");
   printf ("--- ----- ------------- ------------ ---------- --/--/----\n");
 }
 
-
 //fix save function. Save array into file database_updated in the same format withthe 
 //database file.
-void save (dataBase_ptr db)// this function is for saving the database into a text file
-{
+void save (dataBase_ptr db) {
   FILE *dbfu;
   dbfu = fopen ("database_updated", "w");//open an Std IO file to write into
   if (dbfu == NULL)
@@ -52,55 +47,95 @@ void save (dataBase_ptr db)// this function is for saving the database into a te
 	      //add other members);
 
   }
-
   fclose (dbfu);//close file after writing
   return;
-
 }
 
 
-void sort_ID(dataBase_ptr db) {
-  printf("Test");
+// Helper functions
+
+
+int compare_ID(const void* emp_a, const void* emp_b) {
+  // const void* allow function to take in pointer of any type
+  const employee* emp1 = (const employee*)emp_a;
+  const employee* emp2 = (const employee*)emp_b;
+  // strcmp function compare the 2 char arrays containing the IDs
+  return strcmp(emp1->ID, emp2->ID);
 }
 
-
-void sort_date(dataBase_ptr db) {
-
+int compare_date(const void* emp_a, const void* emp_b) {
+  const employee* emp1 = (const employee*)emp_a;
+  const employee* emp2 = (const employee*)emp_b;
+  // Compare year then month then day
+  if (emp1->hire_date.year != emp2->hire_date.year) {
+        return emp1->hire_date.year - emp2->hire_date.year;
+    } else if (emp1->hire_date.month != emp2->hire_date.month) {
+        return emp1->hire_date.month - emp2->hire_date.month;
+    } else {
+        return emp1->hire_date.day - emp2->hire_date.day;
+    }
 }
 
-
-void display_employees(dataBase_ptr db) {
-  employee *ptr;
-  date current_date;
-  int i;
-  char dollar = '$';
-  print_title();
-  for (i = 0; i < db->total; i++) {
-    ptr = &(db->emp[i]);
-    current_date = ptr->hire_date;
-    char full_name[40];
+void print_row(employee *ptr, int i) {
+    char dollar = '$';
+    char full_name[20];
+    // concatenates first and last name
     strcpy(full_name, ptr->first_name);
     strcat(full_name, " ");
     strcat(full_name, ptr->last_name);
-    printf("%-3d %5s %-13.13s %-12.12s %-1c%9.2f %02d/%02d/%d\n", i, ptr->ID, full_name, ptr->email, dollar, ptr->salary, current_date.month, current_date.day, current_date.year);
+    // print and format employee's information
+    printf("%-3d %5s %-13.13s %-12.12s %-1c%9.2f %02d/%02d/%d\n", i, ptr->ID, full_name, ptr->email, dollar, ptr->salary, ptr->hire_date.month, ptr->hire_date.day, ptr->hire_date.year);
+}
+
+
+// Menu options
+
+
+void sort_ID(dataBase_ptr db) {
+  // qsort function sorts array with the specifications provided by helper function compare_ID
+  qsort(db->emp, db->total, sizeof(employee), compare_ID);
+}
+
+void sort_date(dataBase_ptr db) {
+  qsort(db->emp, db->total, sizeof(employee), compare_date);
+}
+
+void display_employees(dataBase_ptr db) {
+  employee *ptr;
+  int i;
+  print_title();
+  for (i = 0; i < db->total; i++) {
+    ptr = &(db->emp[i]); // pointer to current employee in array 
+    print_row(ptr, i); // print employee's information
   } 
 }
 
-
 void search_ID(dataBase_ptr db) {
-
+  employee *ptr;
+  int input, convert, i;
+  printf("Enter the ID you are searching for\n");
+  scanf("%d", &input);
+  // Searches DataBase with given ID
+  for (i = 0; i < db->total; i++) {
+    ptr = &(db->emp[i]);
+    convert = atoi(ptr->ID); // Convert ID char array into int
+    if (convert == input) { // If ID is equal to input then print employee
+      print_title();
+      print_row(ptr, i);
+      return; // End function
+    }
+  }
+  printf("No matches found"); // If loop finish then no match was found
 }
-
 
 void search_last(dataBase_ptr db) {
+  printf("Test");
 
 }
-
 
 void delete_employee(dataBase_ptr db) {
-
+  printf("Test");
 }
-
 
 void display_menu (struct DataBase *db)
 {

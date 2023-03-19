@@ -67,12 +67,18 @@ void print_title();
 
 // Function     : display_menu
 // Description  : Display interactive menu interface for program
-// Inputs       : a ponter to DataBase struct
-// Outputs      : none
+// Inputs       : 
+// Outputs      : 
 void display_menu(dataBase_ptr);
 
 // other function headers here
+// Function     : 
+// Description  : 
+// Inputs       : 
+// Outputs      : 
+int compare_ID(const void*, const void*);
 
+int compare_date(const void*, const void*);
 // Function     : sort_ID
 // Description  : Sort employees by ID from low - high
 // Inputs       : 
@@ -90,6 +96,12 @@ void sort_date(dataBase_ptr);
 // Inputs       : 
 // Outputs      : 
 void display_employees(dataBase_ptr);
+
+// Function     : 
+// Description  : 
+// Inputs       : 
+// Outputs      : 
+void print_row(employee*, int);
 
 // Function     : search_ID
 // Description  : Search and display employee with given ID,
