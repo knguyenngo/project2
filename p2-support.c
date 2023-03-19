@@ -31,26 +31,6 @@ void print_title () {
   printf ("--- ----- ------------- ------------ ---------- --/--/----\n");
 }
 
-//fix save function. Save array into file database_updated in the same format withthe 
-//database file.
-void save (dataBase_ptr db) {
-  FILE *dbfu;
-  dbfu = fopen ("database_updated", "w");//open an Std IO file to write into
-  if (dbfu == NULL)
-  {
-    printf ("File cannot be created");
-    return;
-  }
-  for (int i = 0; i < db->total; i++)
-  {
-      fprintf (dbfu, "bro"); //add format specifiers here, db->emp[i].ID,
-	      //add other members);
-
-  }
-  fclose (dbfu);//close file after writing
-  return;
-}
-
 
 // Helper functions
 
@@ -91,6 +71,25 @@ void print_row(employee *ptr, int i) {
 // Menu options
 
 
+void save (dataBase_ptr db) {
+  FILE *dbfu;
+  employee *ptr;
+  dbfu = fopen ("database_updated", "w");//open an Std IO file to write into
+  if (dbfu == NULL)
+  {
+    printf ("File cannot be created");
+    return;
+  }
+  for (int i = 0; i < db->total; i++)
+  {   
+      ptr = &(db->emp[i]);
+      fprintf (dbfu, "%s %s %s %s %.2f %02d/%02d/%d\n", ptr->ID, ptr->first_name, ptr->last_name, ptr->email, ptr->salary, ptr->hire_date.month, ptr->hire_date.day, ptr->hire_date.year); 
+  }
+  fclose (dbfu);//close file after writing
+  return;
+}
+
+
 void sort_ID(dataBase_ptr db) {
   // qsort function sorts array with the specifications provided by helper function compare_ID
   qsort(db->emp, db->total, sizeof(employee), compare_ID);
@@ -125,7 +124,7 @@ void search_ID(dataBase_ptr db) {
       return; // End function
     }
   }
-  printf("No matches found"); // If loop finish then no match was found
+  printf("No match found"); // If loop finish then no match was found
 }
 
 void search_last(dataBase_ptr db) {
@@ -134,7 +133,22 @@ void search_last(dataBase_ptr db) {
 }
 
 void delete_employee(dataBase_ptr db) {
-  printf("Test");
+  employee *ptr;
+  int input, convert, i;
+  printf("Enter the ID you are searching for\n");
+  scanf("%d", &input);
+  // Searches DataBase with given ID
+  for (i = 0; i < db->total; i++) {
+    ptr = &(db->emp[i]);
+    convert = atoi(ptr->ID); // Convert ID char array into int
+    if (convert == input) { // If ID is equal then delete employee
+      printf("The following employee is deleted:\n");
+      print_title();
+      print_row(ptr, i);
+      return; // End function
+    }
+  }
+  printf("No match found");
 }
 
 void display_menu (struct DataBase *db)
