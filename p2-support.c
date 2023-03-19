@@ -22,7 +22,7 @@ void create_record (char ID[idSIZE], char first[nameSIZE], char last[nameSIZE], 
   add.salary = salary;
   add.hire_date = hire_date;
   
-  // Add employee to DataBase
+  // Copy add struct to employee array
   *db_index = add;
   db->total = ++i; // Increase total amount of employees
 }
@@ -58,6 +58,50 @@ void save (dataBase_ptr db)// this function is for saving the database into a te
 
 }
 
+
+void sort_ID(dataBase_ptr db) {
+  printf("Test");
+}
+
+
+void sort_date(dataBase_ptr db) {
+
+}
+
+
+void display_employees(dataBase_ptr db) {
+  employee *ptr;
+  date current_date;
+  int i;
+  char dollar = '$';
+  print_title();
+  for (i = 0; i < db->total; i++) {
+    ptr = &(db->emp[i]);
+    current_date = ptr->hire_date;
+    char full_name[40];
+    strcpy(full_name, ptr->first_name);
+    strcat(full_name, " ");
+    strcat(full_name, ptr->last_name);
+    printf("%-3d %5s %-13.13s %-12.12s %-1c%9.2f %02d/%02d/%d\n", i, ptr->ID, full_name, ptr->email, dollar, ptr->salary, current_date.month, current_date.day, current_date.year);
+  } 
+}
+
+
+void search_ID(dataBase_ptr db) {
+
+}
+
+
+void search_last(dataBase_ptr db) {
+
+}
+
+
+void delete_employee(dataBase_ptr db) {
+
+}
+
+
 void display_menu (struct DataBase *db)
 {
   int input = 0;
@@ -66,7 +110,7 @@ void display_menu (struct DataBase *db)
     puts
       ("\n**************************************************************");
     printf
-      (  "********** Employee Database - Total Employees: %03d **********\n", db->total);//you need to fix this line so that total employees in the database is printed
+      (  "********** Employee Database - Total Employees: %03d **********\n", db->total);
     puts
       ("**************************************************************\n");
     puts ("Choose one of the menu options below:");
@@ -85,30 +129,39 @@ void display_menu (struct DataBase *db)
     {
       case 1:
         //call the function you defined for sorting by ID
+        sort_ID(db);
         break;
       case 2:
         //call the function you defined for sorting by Hire Date
+        sort_date(db);
         break;
       case 3:
         //call the function you defined for displaying employees
+        display_employees(db);
         break;
       case 4:
         //call the function you defined for searching employees by ID
+        search_ID(db);
         break;
       case 5:
         //call the function you defined for searching employees by Last Name
+        search_last(db);
         break;
       case 6:
         //call the function you defined for deleting employee by ID
+        delete_employee(db);
         break;
       case 7:
         save (db);
         break;
       case 8:
         //free all allocated memory
+        free(db->emp);
+        db->emp = NULL;
+        free(db);
+        db = NULL;
         printf("Bye!\n");
         break;
-
     }
   }
 

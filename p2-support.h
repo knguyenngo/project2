@@ -61,8 +61,8 @@ void create_record(char[idSIZE], char[nameSIZE], char[nameSIZE], char[emailSIZE]
 
 // Function     : print_title 
 // Description  : Print title for employee's records
-// Inputs       : none
-// Outputs      : none
+// Inputs       : 
+// Outputs      : 
 void print_title();
 
 // Function     : display_menu
@@ -77,45 +77,45 @@ void display_menu(dataBase_ptr);
 // Description  : Sort employees by ID from low - high
 // Inputs       : 
 // Outputs      : 
-void sort_ID();
+void sort_ID(dataBase_ptr);
 
 // Function     : sort_date
 // Description  : Sort employees by hire date from earliest - latest
 // Inputs       : 
 // Outputs      : 
-void sort_date();
+void sort_date(dataBase_ptr);
 
 // Function     : display_employees
 // Description  : Display employees as ordered in the DataBase
 // Inputs       : 
 // Outputs      : 
-void display_employees();
+void display_employees(dataBase_ptr);
 
 // Function     : search_ID
 // Description  : Search and display employee with given ID,
 //                display message if employee does not exist
-// Inputs       : employee's ID
-// Outputs      : employee matching given ID
-void search_ID(char[idSIZE]);
+// Inputs       : 
+// Outputs      : 
+void search_ID(dataBase_ptr);
 
 // Function     : search_last
 // Description  : Search and partially display multiple employees by last name,
 //                or display complete match to given string
-// Inputs       : a string with desired last name
-// Outputs      : list of matching employees with given string
-void search_last(char[nameSIZE]);
+// Inputs       : 
+// Outputs      : 
+void search_last(dataBase_ptr);
 
 // Function     : delete_employee
 // Description  : Delete a record matching given ID 
 //                , print if no match found
-// Inputs       : employee's ID
-// Outputs      : none
-void delete_employee(char[idSIZE]);
+// Inputs       : 
+// Outputs      : 
+void delete_employee(dataBase_ptr);
 
 // Function     : save 
 // Description  : Save DataBase to another file named "database_updated"
-// Inputs       : a pointer to DataBase struct
-// Outputs      : none
+// Inputs       : 
+// Outputs      : 
 void save(dataBase_ptr);
 
 #endif // To prevent double inclusion of header
