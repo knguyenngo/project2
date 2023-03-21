@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include "p2-support.h"
 
-
-
 void create_record (char ID[idSIZE], char first[nameSIZE], char last[nameSIZE], char email[emailSIZE], double salary, date hire_date, dataBase_ptr db) {
   // Set index to current total of employees
   int i = db->total;
@@ -46,13 +44,13 @@ int compare_ID(const void* emp_a, const void* emp_b) {
 int compare_date(const void* emp_a, const void* emp_b) {
   const employee* emp1 = (const employee*)emp_a;
   const employee* emp2 = (const employee*)emp_b;
-  // Compare year then month then day
-  if (emp1->hire_date.year != emp2->hire_date.year) {
+  // Compare the hire dates of the employees
+  if (emp1->hire_date.year != emp2->hire_date.year) { // Compare year
         return emp1->hire_date.year - emp2->hire_date.year;
-    } else if (emp1->hire_date.month != emp2->hire_date.month) {
+    } else if (emp1->hire_date.month != emp2->hire_date.month) { // If year is equal compare month
         return emp1->hire_date.month - emp2->hire_date.month;
     } else {
-        return emp1->hire_date.day - emp2->hire_date.day;
+        return emp1->hire_date.day - emp2->hire_date.day; // If year and month is equal, compare day
     }
 }
 
@@ -89,18 +87,18 @@ void save (dataBase_ptr db) {
   return;
 }
 
-
 void sort_ID(dataBase_ptr db) {
   // qsort function sorts array with the specifications provided by helper function compare_ID
   qsort(db->emp, db->total, sizeof(employee), compare_ID);
 }
 
 void sort_date(dataBase_ptr db) {
+  // qsort function sorts array with specifications provided by compare_date
   qsort(db->emp, db->total, sizeof(employee), compare_date);
 }
 
 void display_employees(dataBase_ptr db) {
-  employee *ptr;
+  employee *ptr; // pointer to employee array in database
   int i;
   print_title();
   for (i = 0; i < db->total; i++) {
@@ -129,12 +127,12 @@ void search_ID(dataBase_ptr db) {
 
 void search_last(dataBase_ptr db) {
   printf("Test");
-
 }
 
 void delete_employee(dataBase_ptr db) {
-  employee *ptr;
-  int input, convert, i;
+  employee *ptr; // pointer to array of employees 
+  employee *next; // pointer to element right of current pointer
+  int input, convert, i, j;
   printf("Enter the ID you are searching for\n");
   scanf("%d", &input);
   // Searches DataBase with given ID
@@ -145,7 +143,15 @@ void delete_employee(dataBase_ptr db) {
       printf("The following employee is deleted:\n");
       print_title();
       print_row(ptr, i);
-      return; // End function
+      // Shift elements in array to the left
+      for (j = i+1; j < db->total; j++) { 
+        next = &(db->emp[j]);
+        *ptr = *next;
+        ptr = next; // Move ptr to next position in array
+      }
+      // Decreases total employees in database
+      db->total--;
+      return;
     }
   }
   printf("No match found");
