@@ -65,6 +65,22 @@ void print_row(employee *ptr, int i) {
     printf("%-3d %5s %-13.13s %-12.12s %-1c%9.2f %02d/%02d/%d\n", i, ptr->ID, full_name, ptr->email, dollar, ptr->salary, ptr->hire_date.month, ptr->hire_date.day, ptr->hire_date.year);
 }
 
+char* search_matches (const char* str, const char* substr) {
+    int len = strlen(substr); // Length of substring
+    char search_string[len + 1]; // Allow search depending on length of given input
+    strncpy(search_string, str, len); // Copies employee's last name into search string
+    search_string[len] = '\0'; // Set string terminator
+    if (strncasecmp(search_string, substr, len) == 0) { // If match is found then return pointer to match
+      return (char*)str;
+    }
+    return NULL;
+}
+
+void request_ID(int *ptr) {
+    printf("Enter the ID you are searching for\n");
+    scanf("%d", ptr);
+}
+
 
 // Menu options
 
@@ -110,8 +126,9 @@ void display_employees(dataBase_ptr db) {
 void search_ID(dataBase_ptr db) {
   employee *ptr;
   int input, convert, i;
-  printf("Enter the ID you are searching for\n");
-  scanf("%d", &input);
+  int *input_ptr;
+  input_ptr = &input;
+  request_ID(input_ptr);
   // Searches DataBase with given ID
   for (i = 0; i < db->total; i++) {
     ptr = &(db->emp[i]);
@@ -126,15 +143,33 @@ void search_ID(dataBase_ptr db) {
 }
 
 void search_last(dataBase_ptr db) {
-  printf("Test");
+  employee *ptr;
+  char input[nameSIZE];
+  char* strptr; // Pointer to employee's last name 
+  char* subptr; // Pointer to input given
+  char* match; // Pointer to match between input and employee's last name
+  int i;
+  printf("Enter the last name you are looking for\n");
+  scanf("%10s", input);
+  subptr = input; // Points to input
+  print_title();
+  for (i = 0; i < db->total; i++) {
+    ptr = &(db->emp[i]);
+    strptr = ptr->last_name; // Points to current employee last name
+    match = search_matches(strptr, subptr); // Find if there's a match
+    if (match != NULL) { // If match pointer is not null then print employee
+      print_row(ptr, i);
+    }
+  }
 }
 
 void delete_employee(dataBase_ptr db) {
   employee *ptr; // pointer to array of employees 
   employee *next; // pointer to element right of current pointer
   int input, convert, i, j;
-  printf("Enter the ID you are searching for\n");
-  scanf("%d", &input);
+  int *input_ptr;
+  input_ptr = &input;
+  request_ID(input_ptr);
   // Searches DataBase with given ID
   for (i = 0; i < db->total; i++) {
     ptr = &(db->emp[i]);

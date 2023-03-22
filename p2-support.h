@@ -71,6 +71,14 @@ void print_title();
 // Outputs      : 
 void display_menu(dataBase_ptr);
 
+char* search_matches(const char*, const char*);
+
+// Function     : 
+// Description  : 
+// Inputs       : 
+// Outputs      : 
+void request_ID(int*);
+
 // other function headers here
 // Function     : 
 // Description  : 
