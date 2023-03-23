@@ -29,9 +29,9 @@ void print_title () {
   printf ("--- ----- ------------- ------------ ---------- --/--/----\n");
 }
 
-
+/////////////////////////////////////////////////////////////////////////
 // Helper functions
-
+/////////////////////////////////////////////////////////////////////////
 
 int compare_ID(const void* emp_a, const void* emp_b) {
   // const void* allow function to take in pointer of any type
@@ -81,9 +81,9 @@ void request_ID(int *ptr) {
     scanf("%d", ptr);
 }
 
-
+/////////////////////////////////////////////////////////////////////////
 // Menu options
-
+/////////////////////////////////////////////////////////////////////////
 
 void save (dataBase_ptr db) {
   FILE *dbfu;
@@ -97,7 +97,7 @@ void save (dataBase_ptr db) {
   for (int i = 0; i < db->total; i++)
   {   
       ptr = &(db->emp[i]);
-      fprintf (dbfu, "%s %s %s %s %.2f %02d/%02d/%d\n", ptr->ID, ptr->first_name, ptr->last_name, ptr->email, ptr->salary, ptr->hire_date.month, ptr->hire_date.day, ptr->hire_date.year); 
+      fprintf (dbfu, "%s %s %s %s %.2f %d/%d/%d\n", ptr->ID, ptr->first_name, ptr->last_name, ptr->email, ptr->salary, ptr->hire_date.month, ptr->hire_date.day, ptr->hire_date.year); 
   }
   fclose (dbfu);//close file after writing
   return;
